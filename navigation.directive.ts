@@ -10,6 +10,7 @@
 	 *	levels:number = 1
 	 *	pid:number
 	 *  special:id[]
+	 *  template:string
 	 *
 	 *	Either pid or special must be filled out. If special is used,
 	 *	only one level is supported. (levels-attr is ignored)
@@ -25,7 +26,8 @@
 			scope: {
 				levels: '=',
 				pid: '=',
-				special:'='
+				special:'=',
+				template:'@'
 			},
 			link: link
 		};
@@ -38,8 +40,8 @@
 
 				var wait = scope.$watch('special', function(items) {
 					if(items) {
-						skyUtils.asyncEach(items, sitemap.getPage).then(function(res) {
-							renderMenu(res);
+						skyUtils.asyncEach(items, sitemap.getPage).then(function(result) {
+							renderMenu(result);
 							wait();
 						});
 					}
@@ -49,12 +51,14 @@
 				sitemap.getChildren(scope.pid).then(renderMenu);
 			}
 
-			function renderMenu(res) {
-				scope.items = res;
+			function renderMenu(result) {
+				var templateUrl = scope.template ? `/sky-spa/views/navigation.${scope.template}.template.html` : '/sky-spa/views/navigation.template.html' ;
+				var template = $templateCache.get(templateUrl);
 
-				var template = $templateCache.get('/sky-spa/navigation.template.html');
 
 				element.html(template);
+
+				scope.items = result;
 				$compile(element.contents())(scope);
 			}
 
