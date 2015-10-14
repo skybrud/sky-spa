@@ -1,0 +1,6 @@
+<ul>
+	<li ng-repeat="item in items">
+		<a href="{{item.url}}" ng-class="{act:path.indexOf(item.id)!=-1}">{{item.name}}</a>
+		<navigation pid="item.id" levels="levels-1" ng-if="item.hasChildren && path.indexOf(item.id)!=-1 && levels > 1 && $root.currentPath.indexOf(pid) != -1"></navigation>
+	</li>
+</ul>
