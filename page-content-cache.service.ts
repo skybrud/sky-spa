@@ -1,7 +1,7 @@
 declare module sky {
 	interface IPageContentCacheService {
 		get(url:string):ng.IPromise<any>;
-		getCache(url:string):any;
+		getFromCache(url: string): any;
 	}
 }
 

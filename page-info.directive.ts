@@ -9,6 +9,7 @@
 	 *	##Attributes
 	 *	pid:number = #currentPage.id
 	 *  field:string = 'name'
+	 *  link:any 
 	 * 
 	 **/
 
@@ -18,10 +19,11 @@
 	function pageInfoDirective(sitemap: sky.ISitemapService, $rootScope) {
 		return {
 			restrict: 'E',
-			template: '{{info}}',
+			template: '<span ng-bind-html="info"></span>',
 			scope: {
 				field:'=',
-				pid:'='
+				pid:'=',
+				link:'='
 			},
 			link: link
 		};
@@ -32,7 +34,7 @@
 			var displayField = scope.field ? scope.field : 'name';
 						
 			sitemap.getPage(id).then(function(page) {
-				scope.info = page[displayField];
+				scope.info = scope.link ? '<a href="' + page['url'] + '">' + page[displayField] + '</a>' : page[displayField];
 			});
 		}
 	}

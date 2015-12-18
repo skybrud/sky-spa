@@ -18,9 +18,6 @@ interface Window {
 			$rootScope.settings.mainNavigation.push(page.id);
 		});
 					
-		$rootScope.goToSearch = function() {
-			$location.path('/search/');		
-		};	
 
 	}	
 	

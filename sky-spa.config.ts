@@ -62,8 +62,9 @@
 							data:{
 								templatename: 'error.html',
 								name: 'Siden findes ikke',
-								msg: '',//res.data.meta.error,
-								path: [$rootScope.settings.siteRootId]
+								msg: '404 - siden findes ikke!',//res.data.meta.error,
+								path: [$rootScope.settings.siteRootId],
+								jsonDebug:{}
 							}
 						}
 					});
@@ -77,7 +78,8 @@
 								templatename: 'error.html',
 								name: 'Der er sket en fejl',
 								msg: res.data.meta.error || 'Ukendt fejl (Fejl: '+res.status+')',
-								path: [$rootScope.settings.siteRootId]
+								path: [$rootScope.settings.siteRootId],
+								jsonDebug: {}
 							}
 						}
 					});
@@ -88,9 +90,9 @@
 		
 		templateProvider.$inject = ['fetch', '$templateCache'];
 		function templateProvider(fetch, $templateCache) {
-					
+
 			/* Select template based on server-response */
-			var template = $templateCache.get('/layout/'+fetch.data.data.templatename);
+			var template = $templateCache.get('/layout/views/'+fetch.data.data.templatename);
 			
 			if(!template) {
 				/* TODO: handle when there is no matching template  */
