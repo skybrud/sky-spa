@@ -6,9 +6,9 @@ interface Window {
 
 	angular.module('skySpa').run(run);
 
-	run.$inject = ['$rootScope', 'pagetreeCache', '$location'];
+	run.$inject = ['$rootScope', 'pagetreeCache'];
 	
-	function run($rootScope, pagetreeCache, $location) {
+	function run($rootScope, pagetreeCache) {
 		
 		$rootScope.settings = angular.copy(window.settings);
 			

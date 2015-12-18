@@ -52,7 +52,7 @@
 			}
 
 			function renderMenu(result) {
-				var templateUrl = scope.template ? `/sky-spa/views/navigation.${scope.template}.template.html` : '/sky-spa/views/navigation.template.html' ;
+				var templateUrl = scope.template ? ('/sky-spa/views/navigation.'+scope.template+'.template.html') : '/sky-spa/views/navigation.template.html' ;
 				var template = $templateCache.get(templateUrl);
 
 

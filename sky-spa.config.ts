@@ -45,7 +45,7 @@
 		fetch.$inject = ['$stateParams', '$rootScope', '$q', 'pageContentCache'];
 		function fetch($stateParams, $rootScope, $q, pageContentCache:sky.IPageContentCacheService) {
 			
-			document.body.classList.add('loading');
+			angular.element(document.body).addClass('loading');
 
 			var deferred = $q.defer();
 				
@@ -95,7 +95,6 @@
 			var template = $templateCache.get('/layout/views/'+fetch.data.data.templatename);
 			
 			if(!template) {
-				/* TODO: handle when there is no matching template  */
 				console.warn('Template doesn\'t exist! Reload page?');
 			}
 			
@@ -108,21 +107,21 @@
 			// If there is a redirect path set, go ahead and redirect
 			if(fetch.data.data.redirect) {
 				$state.go('root', { path: fetch.data.data.redirect });
+				return;
 			}
 
-			document.body.classList.remove('loading');
+			if (fetch.data.error) {
+				_this.statusText = _this.data.msg;
+			}
+
+			angular.element(document.body).removeClass('loading');
 			var _this = this;
 			/* Attach fetched data to the controller instance */
 			_this.data = fetch.data.data;	
 			
 			$rootScope.pageTitle = fetch.data.data.name;			
 			$rootScope.currentPath = fetch.data.data.path;
-					
-			if(fetch.data.error) {
-				_this.statusText = _this.data.msg;
-				return; 
-			}
-			
+								
 			/* Get everything in the path (except siteRoot - TODO: do we ever need siteRoot) */	
 			angular.forEach($rootScope.currentPath, function(id) {
 				if(id != $rootScope.settings.siteRootId) {

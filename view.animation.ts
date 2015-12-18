@@ -2,8 +2,8 @@
 	'use strict';
 	angular.module('skySpa').animation('.view', viewAnimation);
 
-	viewAnimation.$inject = ['skyDirection','$animate', '$rootScope'];
-	function viewAnimation(skyDirection: sky.ISkyDirectionService, $animate: ng.IAnimateService, $rootScope) {
+	viewAnimation.$inject = ['skyDirection', '$rootScope'];
+	function viewAnimation(skyDirection: sky.ISkyDirectionService, $rootScope) {
 
 		var scope = $rootScope.$new();
 
@@ -37,7 +37,7 @@
 					zIndex: -1
 				});
 
-				var once = scope.$on('pageTransition:atTop', function(event, config) {
+				var once = scope.$on('skySpa:pageTransition:atTop', function(event, config) {
 					TweenLite.set(ele, {
 						clearProps: 'all'
 					});
@@ -58,12 +58,12 @@
 							window.scrollTo(0, scroll.y);
 						},
 						onComplete() {
-							scope.$broadcast('pageTransition:atTop', {});
+							scope.$broadcast('skySpa:pageTransition:atTop', {});
 							done();
 						}
 					});
 				} else {
-					scope.$broadcast('pageTransition:atTop', {});
+					scope.$broadcast('skySpa:pageTransition:atTop', {});
 					done();
 				}
 

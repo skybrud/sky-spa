@@ -32,8 +32,8 @@ declare module sky {
 	
 	angular.module('skySpa').service('sitemap', sitemap);
 
-	sitemap.$inject = ['$http', '$q', '$timeout', 'pagetreeCache', 'skyPath'];
-	function sitemap($http,	$q, $timeout, pagetreeCache:sky.IPagetreeCacheService, skyPath) {
+	sitemap.$inject = ['$http', '$q', 'pagetreeCache', 'skyPath'];
+	function sitemap($http,	$q, pagetreeCache:sky.IPagetreeCacheService, skyPath) {
 		var _this = this;
 		
 		var allDeferreds = {};
