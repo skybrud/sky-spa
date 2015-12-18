@@ -46,37 +46,12 @@ declare module sky {
 			}
 
 			if(!previous) {
-				if (currentPage.templatename === 'EssFoodOversigtsside.html') {
-					setDirection('frontIntro');
-				} else if (currentPage.templatename === 'EssFoodMedarbejderoversigt.html' || currentPage.templatename === 'EssfoodProduktkatalog.html' || currentPage.templatename === 'EssFoodUnderside.html') {
-					setDirection('subIntro');
-				} else {
-					setDirection('noAni');
-				}
+				setDirection('noAni');
 				return direction
 			}
 
-			//navigating around the frontpage bubles
-			if (previousPage.templatename === 'EssFoodOversigtsside.html' && currentPage.templatename === 'EssFoodOversigtsside.html') {
-				setDirection('bublechange');
-				return direction;
-			}
-
-			// from frontpage
-			if (previousPage.templatename === 'EssFoodOversigtsside.html') {
-				setDirection('frontToSub');
-				return direction;
-			}
-
-			// to frontpage
-			if (currentPage.templatename === 'EssFoodOversigtsside.html') {
-				setDirection('subToFront');
-				return direction;
-			}
-
-
-			//otherwise just wipe it...
-			setDirection('wipe');
+			//otherwise use default
+			setDirection('default');
 			return direction;
 		};
 	

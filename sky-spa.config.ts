@@ -21,25 +21,25 @@
 		});
 
 
-		preload.$inject = ['fetch','$q','skyCrop','skyMediaQuery'];
-		function preload(fetch, $q, skyCrop: sky.ISkyCropService, skyMediaQuery) {
-			//Preload topImage if exists
-			if (fetch.data.data.topImage) {
-				var defer = $q.defer();
-
-				var img = document.createElement('img');
-				img.onload = defer.resolve;
-				img.onerror = defer.resolve
-				setTimeout(defer.resolve,1000);
-
-				var orgImageSize = skyCrop.infoFromSrc(fetch.data.data.topImage);
-
-				img.src = skyMediaQuery.is('phone') ? 
-							skyCrop.getUrl(fetch.data.data.topImage.slice(0, fetch.data.data.topImage.indexOf('?')), orgImageSize, { width: window.innerWidth, height: 300 }, 'cover', 50) :
-							skyCrop.getUrl(fetch.data.data.topImage.slice(0, fetch.data.data.topImage.indexOf('?')), orgImageSize, {width:window.innerWidth*0.75, height:window.innerHeight-250}, 'cover', 50);
-
-				return defer.promise;
+		preLoad.$inject = ['$q', 'fetch', 'skyCrop'];
+		function preLoad($q, fetch, skyCrop: sky.ISkyCropService) {
+			if(!fetch.data.data.topImage) { 
+				return true;
 			}
+			
+			var d = $q.defer();
+
+			var img = new Image();
+			
+			/* Resolve on load, error or after 2000ms */
+			img.onload = img.onerror = d.resolve;
+			setTimeout(d.resolve, 2000);
+
+			var orgImageSize = skyCrop.infoFromSrc(fetch.data.data.topImage);
+
+			img.src = skyCrop.getUrl(fetch.data.data.topImage.slice(0, fetch.data.data.topImage.indexOf('?')), orgImageSize, { width: window.innerWidth }, 'width', 100);
+
+			return d.promise;
 		}
 
 		fetch.$inject = ['$stateParams', '$rootScope', '$q', 'pageContentCache'];
@@ -104,6 +104,12 @@
 		
 		controller.$inject = ['fetch', '$rootScope', 'sitemap'];
 		function controller(fetch, $rootScope, sitemap: sky.ISitemapService) {
+
+			// If there is a redirect path set, go ahead and redirect
+			if(fetch.data.data.redirect) {
+				$state.go('root', { path: fetch.data.data.redirect });
+			}
+
 			document.body.classList.remove('loading');
 			var _this = this;
 			/* Attach fetched data to the controller instance */
@@ -113,7 +119,7 @@
 			$rootScope.currentPath = fetch.data.data.path;
 					
 			if(fetch.data.error) {
-				_this.statusText = fetch.data.data.msg;
+				_this.statusText = _this.data.msg;
 				return; 
 			}
 			
