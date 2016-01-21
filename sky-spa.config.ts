@@ -12,8 +12,8 @@
 		$stateProvider.state('root', {
 			url: '*path',
 			resolve: {
-				fetch:fetch,
-				preload:preload
+				fetch: fetch,
+				preload: preload
 			},
 			templateProvider: templateProvider,
 			controller: controller,
@@ -43,7 +43,7 @@
 		}
 
 		fetch.$inject = ['$stateParams', '$rootScope', '$q', 'pageContentCache'];
-		function fetch($stateParams, $rootScope, $q, pageContentCache:sky.IPageContentCacheService) {
+		function fetch($stateParams, $rootScope, $q, pageContentCache: sky.IPageContentCacheService) {
 			
 			angular.element(document.body).addClass('loading');
 
@@ -57,22 +57,22 @@
 				if(res.status === 404) {
 					console.warn('404: page not found');
 					deferred.resolve({
-						data:{
+						data: {
 							error: 404,
-							data:{
+							data: {
 								templatename: 'error.html',
 								name: 'Siden findes ikke',
 								msg: '404 - siden findes ikke!',//res.data.meta.error,
 								path: [$rootScope.settings.siteRootId],
-								jsonDebug:{}
+								jsonDebug: {}
 							}
 						}
 					});
 				} else {
-					console.warn(res.status+': '+res.statusText);
+					console.warn(res.status + ': ' + res.statusText);
 
 					deferred.resolve({
-						data:{
+						data: {
 							error: res.status,
 							data: {
 								templatename: 'error.html',
@@ -92,7 +92,7 @@
 		function templateProvider(fetch, $templateCache) {
 
 			/* Select template based on server-response */
-			var template = $templateCache.get('/layout/views/'+fetch.data.data.templatename);
+			var template = $templateCache.get('/layout/views/' + fetch.data.data.templatename);
 			
 			if(!template) {
 				console.warn('Template doesn\'t exist! Reload page?');

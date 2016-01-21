@@ -1,5 +1,5 @@
 interface Window {
-	settings?:any;
+	settings?: any;
 }
 (function() {
 	'use strict';

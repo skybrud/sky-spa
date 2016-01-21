@@ -21,16 +21,16 @@
 			restrict: 'E',
 			template: '<span ng-bind-html="info"></span>',
 			scope: {
-				field:'=',
-				pid:'=',
-				link:'='
+				field: '=',
+				pid: '=',
+				link: '='
 			},
 			link: link
 		};
 		
-		function link(scope,element,attrs) {
+		function link(scope, element, attrs) {
 	
-			var id = scope.pid ? scope.pid : $rootScope.currentPath[$rootScope.currentPath.length-1];
+			var id = scope.pid ? scope.pid : $rootScope.currentPath[$rootScope.currentPath.length - 1];
 			var displayField = scope.field ? scope.field : 'name';
 						
 			sitemap.getPage(id).then(function(page) {

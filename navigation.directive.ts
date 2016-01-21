@@ -26,8 +26,8 @@
 			scope: {
 				levels: '=',
 				pid: '=',
-				special:'=',
-				template:'@'
+				special: '=',
+				template: '@'
 			},
 			link: link
 		};
@@ -52,9 +52,8 @@
 			}
 
 			function renderMenu(result) {
-				var templateUrl = scope.template ? ('/sky-spa/views/navigation.'+scope.template+'.template.html') : '/sky-spa/views/navigation.template.html' ;
+				var templateUrl = scope.template ? ('/sky-spa/views/navigation.' + scope.template + '.template.html') : '/sky-spa/views/navigation.template.html' ;
 				var template = $templateCache.get(templateUrl);
-
 
 				element.html(template);
 

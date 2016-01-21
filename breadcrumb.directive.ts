@@ -19,8 +19,8 @@
 			restrict: 'E',
 			templateUrl: '/sky-spa/views/breadcrumb.template.html',
 			scope: {
-				entryLevel:'=',
-				levels:'='
+				entryLevel: '=',
+				levels: '='
 			},
 			link: link
 		};
@@ -28,7 +28,7 @@
 		function link(scope, element, attrs) {
 
 			var startLevel = scope.entryLevel ? scope.entryLevel : 0;
-			var endLevel = scope.levels ? startLevel+scope.levels : 99;
+			var endLevel = scope.levels ? startLevel + scope.levels : 99;
 
 			skyUtils.asyncEach($rootScope.currentPath.slice(startLevel, endLevel), sitemap.getPage).then(function(pages) {
 				scope.bread = pages;

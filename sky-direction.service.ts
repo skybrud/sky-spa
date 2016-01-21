@@ -1,7 +1,7 @@
 declare module sky {
 	interface ISkyDirectionService {
-		getDirection():string;
-		setDirection(direction:string):string;
+		getDirection(): string;
+		setDirection(direction: string): string;
 		getToPage(): any;
 	}
 }
@@ -15,8 +15,8 @@ declare module sky {
 	
 	function skyDirectionService($rootScope, pageContentCache, $state) {
 		var direction = 'noAni';
-		var currentPage:any = {};
-		var previousPage:any = {};
+		var currentPage: any = {};
+		var previousPage: any = {};
 
 		var getToPage = function() {
 			return angular.copy(currentPage);

@@ -15,14 +15,14 @@
  */
 
 interface Window {
-	pageTree?:any;
+	pageTree?: any;
 }
 
 declare module sky {
 	interface ISitemapService {
-		batchFetch(pageId:number):ng.IPromise<IPage>;
-		getPage(pageId:number):ng.IPromise<IPage>;
-		getChildren(pageId:number):ng.IPromise<IPage[]>;
+		batchFetch(pageId: number): ng.IPromise<IPage>;
+		getPage(pageId: number): ng.IPromise<IPage>;
+		getChildren(pageId: number): ng.IPromise<IPage[]>;
 		clearCache():void;
 	}
 }
@@ -46,9 +46,9 @@ declare module sky {
 				fetchOnNextTick.push(id);
 	
 				if(fetchOnNextTick.length === 1) {
-					setTimeout(function() {
+					setTimeout(() => {
 						doFetch(fetchOnNextTick);
-					},0);
+					}, 0);
 				}
 	
 			}
@@ -69,7 +69,7 @@ declare module sky {
 				url: skyPath.get() + '/umbraco/api/NavigationApi/GetByIds',
 				params: {
 					ids: ids.join(','),
-					levels:2
+					levels: 2
 				}	
 			}).then(function(res) {
 				angular.forEach(res.data.data, function(page) {
@@ -85,7 +85,6 @@ declare module sky {
 			var defer = $q.defer();
 			
 			//TODO: should check if there already is a request for specific id
-			
 			$http({
 				url: skyPath.get() + '/umbraco/api/NavigationApi/GetPageTree?nodeId=' + id + '&levels=2'
 			}).then(function(res) {
@@ -96,7 +95,7 @@ declare module sky {
 			return defer.promise;
 		}
 		
-		_this.getPage = function(id:number) {
+		_this.getPage = function(id: number) {
 			var defer = $q.defer();
 		
 			var page = pagetreeCache.get(id);
@@ -111,7 +110,7 @@ declare module sky {
 			return defer.promise;	
 		};
 	
-		_this.getChildren = function(id:number) {
+		_this.getChildren = function(id: number) {
 			var defer = $q.defer();
 			var page = _this.getPage(id).then(function(page) {
 				if (!page.hasChildren){

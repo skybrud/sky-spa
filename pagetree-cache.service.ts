@@ -1,22 +1,22 @@
 declare module sky {
 	interface IPage {
-		id:number;
-		hasChildren:boolean;
-		children:IPage[];
-		parentId:number;
-		url:string;
+		id: number;
+		hasChildren: boolean;
+		children: IPage[];
+		parentId: number;
+		url: string;
 	}
 	interface IPagetreeCacheService {
-		add(page:IPage):void;
-		get(id:number):IPage;
-		empty():void;
+		add(page: IPage): void;
+		get(id: number): IPage;
+		empty(): void;
 	}
 }
 
 (function() {
 	'use strict';
 	
-	angular.module('skySpa').service('pagetreeCache',pagetreeCacheService);
+	angular.module('skySpa').service('pagetreeCache', pagetreeCacheService);
 	
 	pagetreeCacheService.$inject = [];
 	
@@ -43,7 +43,7 @@ declare module sky {
 		}
 		
 		_this.empty = function() {
-			angular.forEach(pageTreeCache,(value,key) => {
+			angular.forEach(pageTreeCache, (value, key) => {
 				delete pageTreeCache[key];
 			});
 		}

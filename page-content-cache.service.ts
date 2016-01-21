@@ -1,6 +1,6 @@
 declare module sky {
 	interface IPageContentCacheService {
-		get(url:string):ng.IPromise<any>;
+		get(url: string): ng.IPromise<any>;
 		getFromCache(url: string): any;
 	}
 }
@@ -8,7 +8,7 @@ declare module sky {
 (function() {
 	'use strict';
 	
-	angular.module('skySpa').service('pageContentCache',pageContentCache);
+	angular.module('skySpa').service('pageContentCache', pageContentCache);
 	
 	pageContentCache.$inject = ['$http', '$q', '$rootScope', 'sitemap', 'skyPath'];
 	
@@ -35,7 +35,6 @@ declare module sky {
 				url: skyPath.get() + '/umbraco/api/ContentApi/GetContent/?url=' + encodeURIComponent(url)
 			}).then(function(res:any) {
 
-
 		// HANDLING cache-invalidation
 		
 			//should this be moved somewhere else and look for the skySpa:pageContentCache:contentChanged event?
@@ -55,7 +54,6 @@ declare module sky {
 				contentChangesGuid = res.data.data.contentChangesGuid;
 				
 		// END HANDLING cache-invalidation
-		
 		
 				// Resolve the promise if it is still unresolved!								
 				if(defer.promise.$$state.status === 0) {

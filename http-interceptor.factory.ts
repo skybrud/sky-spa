@@ -7,13 +7,7 @@
 	httpInterceptor.$inject = ['$q'];
 	function httpInterceptor($q) {
 		return {
-			//response: function(response) {
-			//	return response;
-			//},
-			responseError: function(response) {
-				/** Globally handle request errors */
-				
-				
+			responseError: function(response) {	
 				/** If there is any error on the NavigationApis, force a hard reload */
 				if(response.config.url.indexOf('NavigationApi') > -1) {
 					location.reload();
@@ -25,17 +19,9 @@
 						location.reload();
 					}
 				}
-				
-				/**
-				 * TODO: what if the server is down - we dont want endless reload-circles...
-				 */
-								
+						
 				return $q.reject(response);
-			},
-			//request: function(config) {
-			//	/** TODO: this would be the place to add something to the request when in preview-mode */
-			//	return config;
-			//}		
+			}
 		}
 	}
 
