@@ -33,8 +33,9 @@ declare module sky {
 		this.add = function add(promise:ng.IPromise<any>) {
 			let indexOf = allResolves.indexOf(promise);
 
-			if(indexOf !== -1) {
-				indexOf = allResolves.push(promise);
+			if(indexOf === -1) {
+				allResolves.push(promise);
+				indexOf = allResolves.length - 1;
 			}
 	
 			return allResolves[indexOf];
