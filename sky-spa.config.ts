@@ -13,34 +13,13 @@
 			url: '*path',
 			resolve: {
 				fetch: fetch,
-				preload: preload
+				preload: preload,
+				resolveService: resolveService
 			},
 			templateProvider: templateProvider,
 			controller: controller,
 			controllerAs: 'stateCtrl',
 		});
-
-
-		preLoad.$inject = ['$q', 'fetch', 'skyCrop'];
-		function preLoad($q, fetch, skyCrop: sky.ISkyCropService) {
-			if(!fetch.data.data.topImage) { 
-				return true;
-			}
-			
-			var d = $q.defer();
-
-			var img = new Image();
-			
-			/* Resolve on load, error or after 2000ms */
-			img.onload = img.onerror = d.resolve;
-			setTimeout(d.resolve, 2000);
-
-			var orgImageSize = skyCrop.infoFromSrc(fetch.data.data.topImage);
-
-			img.src = skyCrop.getUrl(fetch.data.data.topImage.slice(0, fetch.data.data.topImage.indexOf('?')), orgImageSize, { width: window.innerWidth }, 'width', 100);
-
-			return d.promise;
-		}
 
 		fetch.$inject = ['$stateParams', '$rootScope', '$q', 'pageContentCache'];
 		function fetch($stateParams, $rootScope, $q, pageContentCache: sky.IPageContentCacheService) {
@@ -85,7 +64,32 @@
 					});
 				}
 			}
+		}
+
+		preload.$inject = ['$q', 'fetch', 'skyCrop'];
+		function preload($q, fetch, skyCrop: sky.ISkyCropService) {
+			if(!fetch.data.data.topImage) { 
+				return true;
+			}
 			
+			var d = $q.defer();
+
+			var img = new Image();
+			
+			/* Resolve on load, error or after 2000ms */
+			img.onload = img.onerror = d.resolve;
+			setTimeout(d.resolve, 2000);
+
+			var orgImageSize = skyCrop.infoFromSrc(fetch.data.data.topImage);
+
+			img.src = skyCrop.getUrl(fetch.data.data.topImage.slice(0, fetch.data.data.topImage.indexOf('?')), orgImageSize, { width: window.innerWidth }, 'width', 100);
+
+			return d.promise;
+		}
+
+		resolveService.$inject = ['resolve'];
+		function resolveService(resolve:sky.IResolveService) {
+			return resolve.all();
 		}
 		
 		templateProvider.$inject = ['fetch', '$templateCache'];
