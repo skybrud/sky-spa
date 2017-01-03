@@ -105,8 +105,8 @@
 			return template; 
 		}
 		
-		controller.$inject = ['fetch', '$rootScope', 'sitemap'];
-		function controller(fetch, $rootScope, sitemap: sky.ISitemapService) {
+		controller.$inject = ['fetch', '$state', '$rootScope', 'sitemap'];
+		function controller(fetch, $state, $rootScope, sitemap: sky.ISitemapService) {
 
 			// If there is a redirect path set, go ahead and redirect
 			if(fetch.data.data.redirect) {
